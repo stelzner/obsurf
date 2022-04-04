@@ -1,14 +1,6 @@
 ## Decomposing 3D Scenes into Object via Unsupervised Volume Segmentation
 
-This codebase contains the code for the ObSuRF model. We highlight the following files:
-
- * `train.py` contains the training loop
- * `obsurf/model/training.py` contains the code for running training, visualization, and evaluation steps
- * `obsurf/model/representations.py` specifies how volumes are parameterized and composed
- * `obsurf/encoder.py` contains the encoder model
- * `obsurf/model/decoder.py` and `obsurf/model/decoder_modules.py` contain the decoder model
- * `obsurf/data.py` contains the data loading routines
- * `runs/[dataset]/[model]/config.yaml` contain the configurations used for the experiments in the paper
+This codebase contains the official code for the [ObSuRF model](https://stelzner.github.io/obsurf/) by Karl Stelzner, Kristian Kersting, and Adam R. Kosiorek.
 
 ### Dependencies
 The dependencies for the model may be installed using the following commands, starting from a recent
@@ -19,7 +11,7 @@ pip install tensorboardx opencv-python
 ```
 
 ### Datasets
-To download the datasets, check [https://stelzner.github.io/obsurf/]. The unpacked data should
+To download the datasets, check the [project page](https://stelzner.github.io/obsurf/). The unpacked data should
 be placed (or symlinked) in the `./data/` directory.
 
 ### Run
@@ -45,6 +37,6 @@ If you found this codebase useful, please consider citing our paper:
 
 ### Acknowledgement
 Parts of this codebase were adapted from the following publicly available repositories:
- * [https://github.com/autonomousvision/occupancy_networks]
- * [https://github.com/deepmind/multi_object_datasets]
- * [https://github.com/bmild/nerf]
+ * https://github.com/autonomousvision/occupancy_networks
+ * https://github.com/deepmind/multi_object_datasets
+ * https://github.com/bmild/nerf
