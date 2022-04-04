@@ -1,0 +1,34 @@
+method: onet
+data:
+  dataset: Shapes3D
+  path: data/ShapeNet
+  input_type: img
+  train_split: train
+  val_split: val
+  test_split: test
+  dim: 3
+model:
+  decoder: simple
+  encoder: resnet18
+  encoder_latent: null
+  decoder_kwargs: {}
+  encoder_kwargs: {}
+  encoder_latent_kwargs: {}
+  c_dim: 512
+  z_dim: 64
+training:
+  out_dir:  out/default
+  batch_size: 64
+  print_every: 10
+  visualize_every: 2000
+  checkpoint_every: 1000
+  validate_every: 2000
+  backup_every: 100000
+  eval_sample: false
+  model_selection_metric: loss
+  model_selection_mode: minimize
+test:
+  threshold: 0.5
+  eval_mesh: true
+  eval_pointcloud: true
+  model_file: model_best.pt

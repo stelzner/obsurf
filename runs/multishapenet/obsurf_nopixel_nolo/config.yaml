@@ -1,0 +1,53 @@
+method: onet
+data:
+  import: configs/data/multishapenet.yaml
+  points_per_item: 8192
+model:
+  encoder_latent: null
+  max_density: 10
+  decoder: slotted
+  encoder: slot_conv
+  rep_type: nerf3d
+  obj_kernel: None
+  value_dim: 3
+  c_dim: 256
+  h_dim: 256
+  z_dim: 0
+  encoder_kwargs:
+    i_dim: 3
+    num_slots: 5
+    slot_iters: 5
+    downsample: 2
+    att_height: 60
+    att_width: 80
+    use_camera_pos: True
+    resnet: 'resnet18'
+    self_attention: True
+    explicit_bg: False
+  decoder_kwargs:
+    decoder_arch: 'nerf'
+    net_arch: ain
+    num_layers: 5
+    hidden_size: 256
+    coord_transform: False
+    coord_transform_map: False
+    view_dependent_values: True
+    start_freq: -5
+    num_freqs: 16
+    use_pixel_features: True
+    color_only_pixel_features: True
+training:
+  out_dir: 'HERE!'
+  lr_warmup: 0
+  color_std: 0.2
+  batch_size: 64
+  model_selection_metric: loss
+  model_selection_mode: minimize
+  visualize_every: 5000
+  validate_every: 5000
+  backup_every: 25000
+  grad_clip: 1.0
+  trainer_kwargs:
+    depth_ll: 1.
+test:
+  threshold: 0.2

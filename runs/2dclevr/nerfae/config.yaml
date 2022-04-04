@@ -1,0 +1,49 @@
+method: onet
+data:
+  import: configs/data/clevr2d.yaml
+  jitter: 4
+model:
+  encoder_latent: null
+  decoder: slotted
+  encoder: slot_conv
+  rep_type: mixture
+  obj_kernel: None
+  value_dim: 3
+  c_dim: 448
+  h_dim: 128
+  z_dim: 0
+  encoder_kwargs:
+    att_height: 4
+    att_width: 4
+    downsample: 4
+    i_dim: 3
+    num_slots: 1
+    mlp_output: True
+    fourier_pos: True
+    explicit_bg: False
+  decoder_kwargs:
+    hidden_size: 128
+    decoder_arch: 'nerf'
+    net_arch: 'ain'
+    num_layers: 5
+    coord_transform: False
+training:
+  max_it: 500000
+  out_dir: 'HERE!'
+  batch_size: 128
+  model_selection_metric: loss
+  model_selection_mode: minimize
+  visualize_every: 1000
+  validate_every: 5000
+test:
+  threshold: 0.2
+  eval_mesh: true
+  eval_pointcloud: false
+generation:
+  batch_size: 100000
+  refine: false
+  n_x: 128
+  n_z: 1
+  resolution_0: 32 
+  upsampling_steps: 2
+
