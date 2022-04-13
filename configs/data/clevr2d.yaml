@@ -1,0 +1,6 @@
+dataset: clevr2d
+path: data/clevr
+input_type: img
+input_channels: 3
+dim: 2
+img_size: 64

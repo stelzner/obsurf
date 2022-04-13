@@ -1,0 +1,5 @@
+dataset: clevr3d
+path: data/clevr3d
+input_type: img
+input_channels: 3
+dim: 3

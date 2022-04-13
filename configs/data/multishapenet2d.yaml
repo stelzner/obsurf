@@ -1,0 +1,6 @@
+dataset: multishapenet2d
+path: data/multishapenet
+input_type: img
+input_channels: 3
+dim: 2
+img_size: 64

@@ -1,0 +1,12 @@
+dataset: sprites
+variant: binarized
+path: data/sprites
+input_type: img
+input_channels: 1
+dim: 2
+points_subsample: 1024
+points_unpackbits: true
+img_size: 64
+img_with_camera: false
+img_augment: false
+
