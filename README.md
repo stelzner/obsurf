@@ -7,7 +7,7 @@ The dependencies for the model may be installed using the following commands, st
 (python 3.7 or newer) Anaconda installation.
 ```
 conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
-pip install tensorboardx opencv-python
+pip install tensorboardx opencv-python pyyaml imageio matplotlib tqdm
 ```
 
 ### Datasets
