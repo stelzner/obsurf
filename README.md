@@ -22,6 +22,18 @@ Novel view sequences may be obtained from a trained model via `render.py`, e.g.
 `python render.py runs/[dataset]/[model]/config.yaml --sceneid 0`. Sequences may be compiled into
 videos using `compile_video.py`.
 
+### Resource Requirements
+The model was trained using 4 A100 GPUs with 40GB of VRAM, each. If you do not have these resources available, consider editing the config files to reduce the batch size (`training: batch_size`) or the number of target points per scene (`data: num_points`). We have not found the model to be particularly sensitive to either value.
+
+### Checkpoints
+Here, we provide some pretrained checkpoints for reference. 
+
+| Model | Dataset | Link |
+| ---|---|---|
+|ObSuRF with pixel conditioning and overlap loss | CLEVR3D | [Link](https://drive.google.com/file/d/1A1PUYw4GoacH59N_pqaz-n1cq_Aa-BKe/view?usp=sharing)
+|ObSuRF with pixel conditioning and overlap loss | MultiShapeNet | [Link](https://drive.google.com/file/d/1Yo9T49buQGjFhAzNQ1trf_EYajNLmLYr/view?usp=sharing)
+
+
 
 ### Citation
 If you found this codebase useful, please consider citing our paper:
