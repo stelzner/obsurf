@@ -44,6 +44,10 @@ def extra_points(min_z, max_z, points_per_z, xlim=(-4., 4.), ylim=(-4., 4.), num
     return points, objects
 
 
+
+
+
+
 class Clevr3dDataset(data.Dataset):
     def __init__(self, path, mode, max_n=6, max_views=None, points_per_item=2048, do_frustum_culling=False,
                  shapenet=False, max_len=None, importance_cutoff=0.5):
@@ -89,6 +93,47 @@ class Clevr3dDataset(data.Dataset):
         return len(self.idxs) * self.num_views
 
     def __getitem__(self, idx, noisy=True):
+        """
+        Returns dict with the following entries:
+            # Input view data
+            'view_idxs': 'int'                                     # Id of the input camera view. USED IN EVAL ONLY.
+            'camera_pos': '(3,)float32',                           # Input pinhole camera position.
+            'input_rays': '(240, 320, 3)float32',                  # Input ray directions. Unit norm.
+            'input_points': '(240, 320, 3)float32',                # 3D points at which the input rays first touch a surface.
+            'input_depths': '(240, 320)float32',                   # Euklidian distances between camera_pos and input_points. USED IN EVAL ONLY.
+            'inputs': '(3, 240, 320)float32',                      # Input RGB image in CHW format. Color values for input_points.
+            'masks': '(max_num_entities, 240, 320)float32',        # Segmentation mask for input camera. Binary mask, one per object instance. USED IN EVAL ONLY.
+            # Query view data
+            'query_camera_pos': '(points_per_item, 3)float32',     # Query pinhole camera position
+            'rays': '(points_per_item, 3)float32',                 # Query ray directions. Unit norm.
+            'surface_points': '(points_per_item, 3)float32',       # 3D points at which the query rays first touch a surface (with a bit of noise if noise=True)
+            'depths': '(points_per_item,)float32',                 # Euklidian distances between query_camera_pos and surface_points.
+            'values': '(points_per_item, 3)float32',               # RGB color values for surface_points.
+            'empty_points': '(points_per_item, 3)float32',         # 3D points sampled between query_camera_pos and surface_points.
+            'empty_points_weights': '(points_per_item,)float32',   # Importance sampling weights for empty_points.
+            # Additionally, the ground truth scene attributes with object locations, shapes etc. are returned. These are for debugging only and not used by the model.
+
+
+        Our code operates in the native coordinate system of the CLEVR dataset,
+        which has the ground plane at around z=0, the object x,ys in [-4, 4],
+        and a render distance of 40. The cameras are always pointed at the
+        origin.
+        Deviating from this for custom data would require a couple of changes,
+        so it might be easiest to simply transform the data to the CLEVR
+        format:
+            - The depth_noise was selected based on the distance between
+              samples expected during rendering. In real world data, the noise
+              inherent to the sensor is probably enough.
+            - A smaller coordinate system requires a larger maximum density to
+              yield opaque geometry. If e.g. objects are only half the size, the
+              density needs to be doubled to yield the same opacity.
+            - The camera and rendering parameters used for visualization and
+              testing are hardcoded. They would need to be adjusted for other
+              coordinate systems
+            - The code for the projection of the pixel features (project_to_image_plane in nerf.py)
+              assumes a camera that's pointed at the origin, and that has the
+              CLEVR camera parameters.
+        """
         scene_idx = idx % len(self.idxs)
         view_idx = idx // len(self.idxs)
 
