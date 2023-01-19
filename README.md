@@ -12,7 +12,7 @@ pip install tensorboardx opencv-python pyyaml imageio matplotlib tqdm
 
 ### Datasets
 To download the datasets, check the [project page](https://stelzner.github.io/obsurf/). The unpacked data should
-be placed (or symlinked) in the `./data/` directory. For notes on how to use custom data, see [this comment](https://github.com/stelzner/obsurf/blob/1089a275bf6040c2ba2e1c9c75c369657f7a5c7c/obsurf/data.py#L95)
+be placed (or symlinked) in the `./data/` directory. For notes on how to use custom data, see [this comment](https://github.com/stelzner/obsurf/blob/1089a275bf6040c2ba2e1c9c75c369657f7a5c7c/obsurf/data.py#L95).
 
 ### Run
 The model is run by executing `python train.py runs/[dataset]/[model]/config.yaml`. Visualizations,
